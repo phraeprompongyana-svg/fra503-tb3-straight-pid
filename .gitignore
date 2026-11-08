@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+build/
+install/
+log/
+*.bag
+*.db3
+*.mcap
+.vscode/
+cells.json
