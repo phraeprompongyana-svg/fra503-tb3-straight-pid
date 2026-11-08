@@ -1,0 +1,29 @@
+# พารามิเตอร์ของโหนด run_straight_tuned (รูปแบบ ROS 2 parameter file)
+# ใช้: ros2 run tb3_straight_tune run_straight_tuned --ros-args --params-file params.yaml -p v:=0.08
+# ค่าที่ใส่ -p ท้ายคำสั่ง (หลัง --params-file) จะทับค่าในไฟล์นี้
+# ชื่อโหนดต้องเป็น run_straight_tuned และต้องอยู่ใต้ ros__parameters (ย่อหน้า 2 ช่อง)
+# ค่าตัวอย่างเป็นค่าเริ่มต้นที่คาดเดา ยังไม่ผ่านการจูนกับหุ่นจริง
+
+run_straight_tuned:
+  ros__parameters:
+    # v: 0.08          # ความเร็วเป้าหมาย (m/s) เปิดบรรทัดนี้ถ้าไม่อยากใส่ -p v:=...
+    dist: 1.2          # ระยะเป้าหมาย (m)
+    mode: stamped      # stamped = TwistStamped (Jazzy) | twist = Twist
+    tau: 0.0           # เวลาชดเชยการหยุด (s) 0 = ปิด
+    accel: 0.0         # ความเร่ง ramp (m/s^2) 0 = ปิด
+    vmin: 0.02         # ความเร็วต่ำสุดช่วง ramp (m/s)
+    wmax: 0.3          # จำกัด angular.z (rad/s)
+    # --- ตัวควบคุมทิศ: kp = ki = kd = 0 คือไม่มี PID (open-loop) ---
+    kp: 0.0
+    ki: 0.0
+    kd: 0.0
+    imax: 0.1          # จำกัดส่วน integral ki*integral ที่ +-imax (rad/s) กัน windup
+    # --- step test: -p test:=step -p step_deg:=10.0 (ต้องมี kp/ki/kd ตัวใดตัวหนึ่ง > 0) ---
+    test: straight     # straight | step
+    step_deg: 0.0      # ขนาด step ของทิศ (องศา) บวก = ทวนเข็ม
+    step_at: 1.0       # เวลาที่ step เกิดขึ้น (s นับจากเริ่มวิ่ง)
+    # --- บันทึกผล ---
+    csv: ''            # ไฟล์ CSV ผลแต่ละรอบ (ต่อท้าย) ว่าง = ไม่บันทึก
+    trace: ''          # ไฟล์ trace ทิศ/คำสั่งต่อเวลา ว่าง = ไม่บันทึก
+    tag: ''            # ป้ายของรอบนี้ (ลงใน CSV)
+    ask_real: false    # ถามระยะที่วัดจริง (cm) หลังจบรอบ (ต้องรันด้วย ros2 run)

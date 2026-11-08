@@ -1,0 +1,10 @@
+# Heading-PID gains used in the "with PID" lab runs.
+# Tuned at v = 0.08 m/s, 180 cm, normal condition (step test +10 deg, then straight-run check
+# with tilted battery); the same set is used for all speeds and conditions.
+# Kp = 2.0: overshoot 3.8-7.5 %, rise < 1 s; Ki and Kd not needed / not distinguishable with 1-2 runs.
+
+run_straight_tuned:
+  ros__parameters:
+    kp: 2.0
+    ki: 0.0
+    kd: 0.0
